@@ -1,3 +1,4 @@
+import javax.sound.midi.SysexMessage;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -67,7 +68,7 @@ public class ChatServer_reti {
                 while (true) {
                     out.println("SUBMITNAME");
                     name = in.nextLine();
-                    if (name == null) {
+                    if (name.equals("null")) {
                         return;
                     }
                     synchronized (names) {
@@ -111,9 +112,9 @@ public class ChatServer_reti {
                 System.out.println(e);
             } finally {
                 if (out != null) {
-                    writers.remove(out);
+                    writers.remove(out); // se non presente restituisce null quindi no problem
                 }
-                if (name != null) {
+                if (!name.equals("null")) {
                     System.out.println(name + " is leaving");
                     names.remove(name);
                     for (Map.Entry<PrintWriter, String> writer : writers.entrySet()) {
